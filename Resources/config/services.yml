@@ -1,0 +1,18 @@
+services:
+
+    encyption.annotations.reader:
+        class: Youshido\EncryptionBundle\Annotation\Reader\EncryptionReader
+        calls:
+            - [ setContainer, [@service_container]]
+
+    encyption.manager:
+        class: Youshido\EncryptionBundle\Service\EncryptionEntityManager
+        arguments: [ @encyption.annotations.reader ]
+        calls:
+            - [ setContainer, [@service_container]]
+
+    encryption.subscriber:
+        class: Youshido\EncryptionBundle\Service\EncryptionEventSubscriber
+        arguments: [ @encyption.manager ]
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
