@@ -1,0 +1,21 @@
+{
+  "name": "youshido/encryption",
+  "type": "symfony-bundle",
+  "description": "Bundle for easy integrations encryption data",
+  "keywords": ["secured", "encryption", "symfony", "bundle"],
+  "homepage": "https://github.com/Youshido/EncryptionBundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Portey Vasil",
+      "email": "portey@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4",
+    "defuse/php-encryption": "^1.2"
+  },
+  "autoload": {
+    "psr-4": { "Youshido\\EncryptionBundle\\": "" }
+  }
+}
