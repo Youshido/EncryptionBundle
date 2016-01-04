@@ -36,21 +36,26 @@ class EncryptionReader extends ContainerAware
             $reflectionObj = new \ReflectionObject($entity);
         }
 
-        foreach ($reflectionObj->getProperties() as $property) {
-            /** @var Encryption $annotation */
-            if ($annotation = $reader->getPropertyAnnotation($property, $this->annotationClass)) {
-                $property->setAccessible(true);
-                $value = $property->getValue($entity);
 
-                $holder = new EncryptionHolder();
-                $holder
-                    ->setAnnotation($annotation)
-                    ->setValue($value)
-                    ->setProperty($property->getName());
+        try{
+            do {
+                foreach ($reflectionObj->getProperties() as $property) {
+                    /** @var Encryption $annotation */
+                    if ($annotation = $reader->getPropertyAnnotation($property, $this->annotationClass)) {
+                        $property->setAccessible(true);
+                        $value = $property->getValue($entity);
 
-                $holders[] = $holder;
-            }
-        }
+                        $holder = new EncryptionHolder();
+                        $holder
+                            ->setAnnotation($annotation)
+                            ->setValue($value)
+                            ->setProperty($property->getName());
+
+                        $holders[] = $holder;
+                    }
+                }
+            } while ($reflectionObj = $reflectionObj->getParentClass());
+        } catch (\ReflectionException $e) { }
 
         return $holders;
     }

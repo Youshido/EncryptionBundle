@@ -81,7 +81,7 @@ class EncryptionEntityManager extends ContainerAware
         try {
             return \Crypto::decrypt(base64_decode($value), base64_decode($key));
         } catch (\Exception $e) {
-            throw new \Exception('Error while encoding data');
+            throw new \Exception('Error while decoding data');
         }
     }
 }
